@@ -15,12 +15,17 @@ class window.App extends Backbone.Model
 
     (@get 'playerHand').on 'stand', =>
       (@get 'dealerHand').models[0].flip()
-      (@get 'dealerHand').hit() while (@get 'dealerHand').scores()[0] < 16 or (@get 'dealerHand').scores()[1] < 16
+      (@get 'dealerHand').hit() while (@get 'dealerHand').scores()[0] <= 16 or (@get 'dealerHand').scores()[1] <= 16
 
     (@get 'dealerHand').on 'hit', =>
-      alert 'Dealer Busts' if (@get 'dealerHand').scores()[0] > 21
+      if (@get 'dealerHand').scores()[0] > 21
+        alert 'Dealer Busts'
+        location.reload()
+        return
       if (@get 'dealerHand').scores()[0] > (@get 'playerHand').scores()[0]
         alert 'You Lose'
+        location.reload()
       else if (@get 'dealerHand').scores()[0] == (@get 'playerHand').scores()[0]
         alert 'Split Pot!'
-      else alert 'You Win!'
+        location.reload()
+      else (@get 'dealerHand').hit()
