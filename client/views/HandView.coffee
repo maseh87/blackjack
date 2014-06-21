@@ -3,7 +3,8 @@ class window.HandView extends Backbone.View
   className: 'hand'
 
   #todo: switch to mustache
-  template: _.template '<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>'
+  #the dealer and score and you and the score view
+  template: _.template '<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score hnd-view"></span>)</h2>'
 
   initialize: ->
     @collection.on 'add remove change', => @render()

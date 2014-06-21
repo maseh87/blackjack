@@ -1,5 +1,7 @@
 class window.CardView extends Backbone.View
 
+  #the writing on the individual cards
+
   className: 'card'
 
   template: _.template '<%= rankName %> of <%= suitName %>'
