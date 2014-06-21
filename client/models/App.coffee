@@ -12,9 +12,13 @@ class window.App extends Backbone.Model
   checkPlayerScore: ->
     if @attributes.playerHand.scores() > 21
       alert 'busted!'
+      #if an alert is triggered the page will reload
+      if alert then location.reload()
 
   checkDealerScore: ->
     if @attributes.playerHand.scores() > @attributes.dealerHand.scores()
       alert 'You Win!'
     else
       alert 'You Lose!'
+    #if an alert is triggered the page will reload
+    if alert then location.reload()
