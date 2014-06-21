@@ -6,9 +6,11 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop()).last()
+    @trigger 'hit', @
 
   stand: ->
-    @at(0).flip()
+    # @at(0).flip()
+    @trigger 'stand', @
 
 
   scores: ->
@@ -23,3 +25,4 @@ class window.Hand extends Backbone.Collection
     , 0
     if hasAce then [score, score + 10] else [score]
 
+  # dealerBust: ->

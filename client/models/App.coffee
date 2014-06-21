@@ -5,20 +5,22 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
-    @attributes.playerHand.on 'add', @checkPlayerScore, @
-    @attributes.dealerHand.on 'change', @checkDealerScore, @
+    # @attributes.playerHand.on 'add', @checkPlayerScore, @
+    # @attributes.dealerHand.on 'change', @checkDealerScore, @
 
-
-  checkPlayerScore: ->
-    if @attributes.playerHand.scores() > 21
-      alert 'busted!'
+    (@get 'playerHand').on 'hit', =>
+      alert 'busted!' if (@get 'playerHand').scores()[0] > 21
       #if an alert is triggered the page will reload
-      if alert then location.reload()
+      # location.reload()
 
-  checkDealerScore: ->
-    if @attributes.playerHand.scores() > @attributes.dealerHand.scores()
-      alert 'You Win!'
-    else
-      alert 'You Lose!'
-    #if an alert is triggered the page will reload
-    if alert then location.reload()
+    (@get 'playerHand').on 'stand', =>
+      (@get 'dealerHand').models[0].flip()
+      (@get 'dealerHand').hit() while (@get 'dealerHand').scores()[0] < 16 or (@get 'dealerHand').scores()[1] < 16
+
+    (@get 'dealerHand').on 'hit', =>
+      alert 'Dealer Busts' if (@get 'dealerHand').scores()[0] > 21
+      if (@get 'dealerHand').scores()[0] > (@get 'playerHand').scores()[0]
+        alert 'You Lose'
+      else if (@get 'dealerHand').scores()[0] == (@get 'playerHand').scores()[0]
+        alert 'Split Pot!'
+      else alert 'You Win!'
